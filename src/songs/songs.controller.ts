@@ -1,33 +1,34 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { SongsService } from './songs.service';
+import { Body, Controller, Post, Delete, Get, Put, Param } from '@nestjs/common';
+import { create } from 'domain';
 import { CreateSongDTO } from './create-song.dto';
+import { SongsService } from './songs.service';
 
 @Controller('songs')
 export class SongsController {
-    constructor(private SongsService: SongsService) {}
+    constructor(private songService: SongsService) {}
 
     @Post()
-    create(@Body() CreateSongDTO: CreateSongDTO) {
-        return this.SongsService.create(CreateSongDTO);
+    create(@Body() createSongDTO: CreateSongDTO) {
+        return this.songService.create(createSongDTO);
     }
 
     @Get()
     findAll() {
-        return this.SongsService.findAll();
+        return this.songService.findAll();
     }
 
     @Get(':id')
     findOne(@Param('id') id: number) {
-        return this.SongsService.findOne(id);
+        return this.songService.findOne(id);
     }
 
     @Put(':id')
-    update(@Param('id') id: number, @Body() createSongDTO: CreateSongDTO){
-        return this.SongsService
+    update(@Param('id') id: number, @Body() createSongDTO: CreateSongDTO) {
+        return this.songService.updateOne(id, createSongDTO);
     }
 
     @Delete(':id')
-    delete(){
-        return 'Delete song by id';
+    delete(@Param('id') id: number) {
+        return this.songService.delete(id);
     }
 }
