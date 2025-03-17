@@ -1,40 +1,40 @@
 import { Injectable } from '@nestjs/common';
-import { Song } from './song.entity';
 import { CreateSongDTO } from './create-song.dto';
+import { Song } from './song.entity';
 
 @Injectable()
 export class SongsService {
-    private currentId: number = 0;
+    private currentId : number = 0;
     private songs: Song[] = [];
 
-    create(createSongDTO: CreateSongDTO) {
+    create(CreateSongDTO : CreateSongDTO){
         const song: Song = {
-            id: this.currentId,
-            title: createSongDTO.title,
-            artist: createSongDTO.artist,
+            id : this.currentId,
+            title : CreateSongDTO.title,
+            artist : CreateSongDTO.artist
         };
         ++this.currentId;
         this.songs.push(song);
     }
 
-    findAll(): Song[] {
-        return this.songs;
+    findAll() : Song[]{
+        return this.songs
     }
 
-    findOne(id: number): Song[]{
-        return this.songs.filter((song) => song.id == id );
+    findOne(id :number) : Song[]{
+        return this.songs.filter((song) => song.id == id)
     }
 
-    delete(id: number) {
+    delete(id: number){
         this.songs = this.songs.filter((song) => song.id != id);
     }
 
-    updateOne(id: number, createSongDTO: CreateSongDTO) {
-        this.songs.forEach((song) => {
-            if (song.id == id) {
-                song.artist = createSongDTO.artist;
-                song.title = createSongDTO.title
+    updateOne(id: number, createSondDTO : CreateSongDTO){
+        this.songs.forEach((song) =>{
+            if(song.id == id){
+                song.artist = createSondDTO.artist;
+                song.title = createSondDTO.title;
             }
-        })
+        });
     }
 }
